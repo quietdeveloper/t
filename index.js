@@ -17,7 +17,10 @@ const clientS = new speech.SpeechClient();
 
 // the  authentication file
 // should have the prefix and token
-const config = require('./auth.json');
+//const config = require('./auth.json');
+const token = process.env.DISCORD_TOK;
+const prefix = process.env.DISCORD_PER;
+
 
 // currently used to turn the stereo to mono audio
 let ffmpeg = require('fluent-ffmpeg');
@@ -37,7 +40,7 @@ let q2 = [];
 const directory = 'audio';
 
 client.on('message', msg => {
-  if (msg.content.startsWith(config.prefix + 'c')) {
+  if (msg.content.startsWith(prefix + 'c')) {
     const voiceChannel = msg.member.voice.channel;
     //console.log(voiceChannel.id);
 
@@ -100,7 +103,7 @@ client.on('message', msg => {
       .catch(console.log);
   }
   // disconnect for voice channel
-  if (msg.content.startsWith(config.prefix + 'dc')) {
+  if (msg.content.startsWith(prefix + 'dc')) {
     let [command, ...channelName] = msg.content.split(" ");
     let voiceChannel = msg.member.voice.channel;
     voiceChannel.leave();
@@ -111,7 +114,7 @@ client.on('message', msg => {
 });
 
 // login
-client.login(config.token);
+client.login(token);
 
 // just notifiy when ready
 client.on('ready', () => {
